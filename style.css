@@ -1,19 +1,21 @@
-/* Nashville Websites & PC Repair — plain, mobile-first, no frameworks */
+/* Nobody Watching AI — plain, mobile-first, no frameworks.
+   Same bones as the Nashville Website Design site, darker identity. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
-  color: #1c1c1c;
-  background: #fafafa;
+  color: #e8e8e8;
+  background: #101014;
 }
 
 header {
-  background: #14213d;
+  background: #000;
   color: #fff;
   padding: 2.5rem 1.25rem;
   text-align: center;
+  border-bottom: 2px solid #3a3a44;
 }
 
 header h1 {
@@ -23,7 +25,7 @@ header h1 {
 }
 
 header .tagline {
-  color: #c9d1e0;
+  color: #9fb3c8;
   font-size: 1rem;
   max-width: 34rem;
   margin: 0 auto;
@@ -36,8 +38,8 @@ main {
 }
 
 section {
-  background: #fff;
-  border: 1px solid #e3e3e3;
+  background: #1a1a21;
+  border: 1px solid #2e2e38;
   border-radius: 10px;
   padding: 1.5rem 1.25rem;
   margin-top: 1.5rem;
@@ -46,11 +48,13 @@ section {
 h2 {
   font-size: 1.25rem;
   margin-bottom: 0.6rem;
-  color: #14213d;
+  color: #9fb3c8;
 }
 
 p { margin-bottom: 0.75rem; }
 p:last-child { margin-bottom: 0; }
+
+a { color: #7fd0ff; }
 
 ul.prices {
   list-style: none;
@@ -63,34 +67,61 @@ ul.prices li {
   align-items: baseline;
   gap: 1rem;
   padding: 0.65rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #2e2e38;
 }
 
 ul.prices li:last-child { border-bottom: none; }
 
 ul.prices small {
   display: block;
-  color: #555;
+  color: #a8a8b3;
   font-size: 0.85rem;
   margin-top: 0.15rem;
 }
 
 .price {
   font-weight: 700;
-  color: #14213d;
+  color: #7fd0ff;
   white-space: nowrap;
   text-align: right;
 }
 
-.note {
-  font-size: 0.9rem;
-  color: #555;
+ol.steps {
+  margin: 1rem 0 0.25rem 1.25rem;
+}
+
+ol.steps li {
+  margin-bottom: 0.75rem;
+  padding-left: 0.25rem;
+}
+
+ol.steps li:last-child { margin-bottom: 0; }
+
+ul.trust-list {
+  list-style: none;
+  margin-top: 0.75rem;
+}
+
+ul.trust-list li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+ul.trust-list li:last-child { margin-bottom: 0; }
+
+ul.trust-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #7fd0ff;
+  font-weight: 700;
 }
 
 .button {
   display: inline-block;
-  background: #fca311;
-  color: #14213d;
+  background: #7fd0ff;
+  color: #101014;
   font-weight: 700;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
@@ -98,7 +129,7 @@ ul.prices small {
   margin-top: 0.5rem;
 }
 
-.button:active { background: #e59400; }
+.button:active { background: #5fb8ec; }
 
 footer {
   text-align: center;
