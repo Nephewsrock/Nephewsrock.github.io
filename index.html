@@ -3,46 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nashville Website Design</title>
-<link rel="stylesheet" href="style.css">
+<title>Riverside Auto Care | Auto Repair in Nashville, TN</title>
+<meta name="description" content="Riverside Auto Care — honest, affordable auto repair in Nashville, TN. Oil changes, brakes, diagnostics, and more. Call (615) 555-0147.">
+<style>
+  :root{
+    --navy:#14213d; --red:#e63946; --light:#f8f9fa; --gray:#6c757d; --dark:#212529;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--dark);line-height:1.6}
+  a{color:inherit}
+
+  /* Top bar */
+  .topbar{background:var(--navy);color:#fff;font-size:.85rem;padding:.45rem 1rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+  .topbar a{text-decoration:none;font-weight:600}
+  .topbar a:hover{text-decoration:underline}
+
+  /* Nav */
+  nav{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08);position:sticky;top:0;z-index:50}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:.8rem 1rem;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-size:1.4rem;font-weight:800;color:var(--navy);text-decoration:none}
+  .logo span{color:var(--red)}
+  .nav-links{display:flex;gap:1.4rem;list-style:none}
+  .nav-links a{text-decoration:none;font-weight:600;font-size:.95rem;color:var(--dark)}
+  .nav-links a:hover{color:var(--red)}
+  .nav-cta{background:var(--red);color:#fff!important;padding:.5rem 1.1rem;border-radius:6px}
+  .nav-cta:hover{background:#c92f3b}
+  @media(max-width:640px){.nav-links li:not(:last-child){display:none}}
+
+  /* Hero */
+  .hero{background:linear-gradient(rgba(20,33,61,.88),rgba(20,33,61,.88)),repeating-linear-gradient(45deg,#1b2a4a 0 18px,#16233c 18px 36px);color:#fff;text-align:center;padding:4.5rem 1rem}
+  .hero h1{font-size:2.4rem;margin-bottom:.6rem;line-height:1.2}
+  .hero p{font-size:1.15rem;max-width:640px;margin:0 auto 1.8rem;color:#dfe3ea}
+  .btn{display:inline-block;padding:.85rem 1.8rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:1.05rem;margin:.3rem}
+  .btn-red{background:var(--red);color:#fff}
+  .btn-red:hover{background:#c92f3b}
+  .btn-outline{border:2px solid #fff;color:#fff}
+  .btn-outline:hover{background:#fff;color:var(--navy)}
+  .badges{margin-top:1.6rem;font-size:.9rem;color:#c9d2e0}
+
+  /* Sections */
+  section{padding:3.5rem 1rem}
+  .wrap{max-width:1100px;margin:0 auto}
+  h2{font-size:1.9rem;color:var(--navy);margin-bottom:.4rem;text-align:center}
+  .sub{text-align:center;color:var(--gray);margin-bottom:2.2rem;max-width:640px;margin-left:auto;margin-right:auto}
+
+  /* Services */
+  .services{background:var(--light)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+  .card{background:#fff;border-radius:10px;padding:1.6rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid var(--red)}
+  .card h3{color:var(--navy);margin-bottom:.4rem;font-size:1.15rem}
+  .card p{color:var(--gray);font-size:.95rem;margin-bottom:.7rem}
+  .card .from{font-weight:800;color:var(--red);font-size:1.05rem}
+
+  /* Why us */
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;text-align:center}
+  .why{padding:1rem}
+  .why .icon{font-size:2.2rem;margin-bottom:.5rem}
+  .why h3{color:var(--navy);margin-bottom:.3rem}
+  .why p{color:var(--gray);font-size:.95rem}
+
+  /* Reviews */
+  .reviews{background:var(--navy);color:#fff}
+  .reviews h2{color:#fff}
+  .reviews .sub{color:#b9c3d6}
+  .stars{color:#ffc107;letter-spacing:2px;margin-bottom:.5rem}
+  .review{background:rgba(255,255,255,.07);border-radius:10px;padding:1.5rem}
+  .review p{font-style:italic;margin-bottom:.8rem;color:#e6ebf3}
+  .review cite{font-style:normal;font-weight:700;color:#fff;font-size:.9rem}
+
+  /* Visit */
+  .visit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;align-items:start}
+  .hours{width:100%;border-collapse:collapse}
+  .hours td{padding:.55rem .2rem;border-bottom:1px solid #e9ecef}
+  .hours tr:last-child td{border-bottom:none}
+  .hours td:last-child{text-align:right;font-weight:600}
+  .addr-box{background:var(--light);border-radius:10px;padding:1.8rem}
+  .addr-box h3{color:var(--navy);margin-bottom:.6rem}
+  .big-phone{font-size:1.6rem;font-weight:800;color:var(--red);text-decoration:none}
+  .big-phone:hover{text-decoration:underline}
+
+  /* Footer */
+  footer{background:var(--dark);color:#adb5bd;text-align:center;padding:2rem 1rem;font-size:.9rem}
+  footer a{color:#fff}
+  .sample-note{margin-top:1rem;font-size:.8rem;color:#6c757d;border-top:1px solid #3a3f44;padding-top:1rem}
+
+  /* Sticky mobile call */
+  .mobile-call{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--red);color:#fff;text-align:center;padding:1rem;font-weight:800;font-size:1.15rem;text-decoration:none;z-index:60}
+  @media(max-width:640px){.mobile-call{display:block}body{padding-bottom:60px}.hero h1{font-size:1.9rem}}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Nashville Website Design</h1>
-  <p class="tagline">Websites for folks and small businesses around Nashville. Flat prices, honest work.</p>
-</header>
+<div class="topbar">
+  <span>Mon–Fri 7:30am–6pm &nbsp;·&nbsp; Sat 8am–2pm</span>
+  <a href="tel:+16155550147">(615) 555-0147</a>
+  <span>1234 Gallatin Pike, Nashville, TN</span>
+</div>
 
-<main>
-
-  <section id="about">
-    <h2>Who this is for</h2>
-    <p>I'm Tony. I build and fix websites here in Nashville, Tennessee — mostly for auto repair shops. No upsells, no surprises: free look first, then a flat quote before any work starts.</p>
-  </section>
-
-  <section id="websites">
-    <h2>Websites for Auto Shops</h2>
-    <p>I build and fix websites for auto repair shops. Free look first, then a flat quote before any work starts — no surprises.</p>
-    <ul class="prices">
-      <li><span>Website fix <small>— your site exists but something's broken: dead pages, errors, hacked-looking content, visitors getting blocked</small></span><span class="price">$200 flat</span></li>
-      <li><span>New simple website <small>— nothing to work with: dead link, no site, just listings. Clean site that works on phones and shows up on Google</small></span><span class="price">$500 flat</span></li>
-      <li><span>Full website rebuild <small>— your site's up but outdated: old design, missing info, no security. Rebuilt from scratch, modern and complete</small></span><span class="price">$750 flat</span></li>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">RIVERSIDE <span>AUTO CARE</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a class="nav-cta" href="tel:+16155550147">Call Now</a></li>
     </ul>
-    <p class="note">Something unusual, like a hijacked domain? Free look first, then a flat quote for your situation. Your domain and hosting stay in your name — I set them up, you pay the provider directly.</p>
-  </section>
+  </div>
+</nav>
 
-  <section id="contact">
-    <h2>Get in touch</h2>
-    <p>The fastest way to reach me is a message on Facebook. Tell me what's going on and I'll take a look — free.</p>
-    <p>Prefer to call or text? <a href="tel:+16154977997">615-497-7997</a><br>Email: <a href="mailto:Nephewsrock@yahoo.com">Nephewsrock@yahoo.com</a></p>
-    <a class="button" href="https://www.facebook.com/1211981281999904/">Message me on Facebook</a>
-  </section>
+<div class="hero">
+  <h1>Honest Auto Repair in Nashville</h1>
+  <p>Family-owned since 2009. Upfront prices, no surprises — just your car fixed right the first time.</p>
+  <a class="btn btn-red" href="tel:+16155550147">Call (615) 555-0147</a>
+  <a class="btn btn-outline" href="#services">See Services &amp; Prices</a>
+  <div class="badges">ASE-Certified Technicians &nbsp;·&nbsp; 24-Month / 24,000-Mile Warranty &nbsp;·&nbsp; Free Shuttle</div>
+</div>
 
-</main>
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>Services &amp; Upfront Prices</h2>
+    <p class="sub">The price we quote is the price you pay. No mystery charges, ever.</p>
+    <div class="grid">
+      <div class="card"><h3>Oil Change</h3><p>Full synthetic, filter, and 21-point inspection.</p><div class="from">from $49.95</div></div>
+      <div class="card"><h3>Brake Service</h3><p>Pads, rotors, and a full brake system check.</p><div class="from">from $129</div></div>
+      <div class="card"><h3>Diagnostics</h3><p>Check-engine light? We find the real problem fast.</p><div class="from">$89</div></div>
+      <div class="card"><h3>Tires &amp; Alignment</h3><p>Top brands, mounted, balanced, and aligned.</p><div class="from">from $99</div></div>
+      <div class="card"><h3>A/C Service</h3><p>Stay cool — recharge, leak check, full system test.</p><div class="from">from $119</div></div>
+      <div class="card"><h3>Scheduled Maintenance</h3><p>30k / 60k / 90k factory services, done right.</p><div class="from">from $149</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2>Why Nashville Trusts Riverside</h2>
+    <p class="sub">We treat your car like it's our own — and your wallet like it's ours too.</p>
+    <div class="why-grid">
+      <div class="why"><div class="icon">🔧</div><h3>ASE-Certified Techs</h3><p>Every technician is certified and factory-trained.</p></div>
+      <div class="why"><div class="icon">🛡️</div><h3>24/24 Warranty</h3><p>24 months or 24,000 miles on parts and labor.</p></div>
+      <div class="why"><div class="icon">💬</div><h3>Plain-English Quotes</h3><p>We show you what's wrong before we fix anything.</p></div>
+      <div class="why"><div class="icon">🚐</div><h3>Free Shuttle</h3><p>Drop off your car, we'll get you where you need to go.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <h2>What Our Customers Say</h2>
+    <p class="sub">4.9 stars from 400+ Google reviews</p>
+    <div class="grid">
+      <div class="review"><div class="stars">★★★★★</div><p>"Quoted me $180 less than the dealership and had it done the same day. These folks are straight shooters."</p><cite>— Marcus T., East Nashville</cite></div>
+      <div class="review"><div class="stars">★★★★★</div><p>"They showed me the worn parts and explained everything before touching a bolt. First shop I've ever fully trusted."</p><cite>— Denise W., Madison</cite></div>
+      <div class="review"><div class="stars">★★★★★</div><p>"In and out for brakes in under two hours. Free shuttle got me to work and back. Flawless."</p><cite>— James R., Hermitage</cite></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap">
+    <h2>Visit Us</h2>
+    <p class="sub">Walk-ins welcome. Appointments get priority.</p>
+    <div class="visit-grid">
+      <div>
+        <table class="hours">
+          <tr><td>Monday – Friday</td><td>7:30am – 6:00pm</td></tr>
+          <tr><td>Saturday</td><td>8:00am – 2:00pm</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+      <div class="addr-box">
+        <h3>Riverside Auto Care</h3>
+        <p>1234 Gallatin Pike<br>Nashville, TN 37216</p>
+        <p style="margin-top:.8rem"><a class="big-phone" href="tel:+16155550147">(615) 555-0147</a></p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <p>Nashville, TN &mdash; serving the greater Nashville area</p>
+  <p>Riverside Auto Care &mdash; Nashville, TN &nbsp;·&nbsp; <a href="tel:+16155550147">(615) 555-0147</a></p>
+  <p class="sample-note">Sample website built by <a href="https://nephewsrock.github.io">Nashville Website Design</a> — this is a fictional demo shop showing the kind of site Tony builds.</p>
 </footer>
+
+<a class="mobile-call" href="tel:+16155550147">📞 Call (615) 555-0147</a>
 
 </body>
 </html>
