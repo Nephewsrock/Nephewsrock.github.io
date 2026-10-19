@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>AI Front Desk — Live Demo | Tony's Tech Services Nashville</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f4f2ee;
+        --surface: #ffffff;
+        --surface-2: #eceae4;
+        --ink: #1c1e22;
+        --ink-soft: #4b4f57;
+        --ink-faint: #757a83;
+        --line: #d8d4cb;
+        --accent: #c2410c;
+        --accent-ink: #ffffff;
+        --accent-soft: #fbe9dd;
+        --steel: #23262d;
+        --steel-ink: #f2f0eb;
+        --steel-soft: #a7adb8;
+        --green: #177245;
+        --green-dot: #1fae66;
+        --red: #b3372c;
+        --amber-bg: #fdf3d7;
+        --amber-ink: #7a5b00;
+        --bubble-bot: #f0eee8;
+        --bubble-user: #23262d;
+        --bubble-user-ink: #f5f3ee;
+        --shadow: 0 18px 50px rgba(28, 30, 34, 0.14), 0 3px 10px rgba(28, 30, 34, 0.08);
+        --radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141518;
+          --surface: #1e2025;
+          --surface-2: #26282e;
+          --ink: #eceae4;
+          --ink-soft: #b9bcc2;
+          --ink-faint: #8b8f98;
+          --line: #33363e;
+          --accent: #e8622a;
+          --accent-ink: #ffffff;
+          --accent-soft: #3a2417;
+          --steel: #101114;
+          --steel-ink: #f2f0eb;
+          --steel-soft: #9aa0ab;
+          --green: #4cc084;
+          --green-dot: #2fce7e;
+          --red: #e07a6e;
+          --amber-bg: #3a3010;
+          --amber-ink: #f0cd6b;
+          --bubble-bot: #2a2c33;
+          --bubble-user: #e8622a;
+          --bubble-user-ink: #ffffff;
+          --shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { animation: none !important; transition: none !important; }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 17px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+      h1, h2, h3 { font-family: "Barlow Condensed", "Barlow", sans-serif; letter-spacing: 0.01em; margin: 0; }
+
+      /* ---------- Hero (Tony's product) ---------- */
+      .hero {
+        background: var(--steel);
+        color: var(--steel-ink);
+        padding: 64px 0 72px;
+      }
+      .hero .kicker {
+        font-family: "Barlow Semi Condensed", "Barlow", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 14px;
+      }
+      .hero h1 {
+        font-size: clamp(44px, 7vw, 76px);
+        font-weight: 700;
+        line-height: 0.98;
+        text-transform: uppercase;
+      }
+      .hero h1 .thin { color: var(--steel-soft); }
+      .hero .sub {
+        max-width: 720px;
+        font-size: clamp(17px, 2.2vw, 20px);
+        color: #d8d5cd;
+        margin: 22px 0 0;
+      }
+      .hero .sub strong { color: #ffffff; }
+      .hero-facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+      .hero-fact {
+        border: 1px solid #3a3d45;
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #e8e5de;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .hero-fact b { color: var(--accent); font-weight: 700; }
+      .hero-actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+      .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-family: "Barlow Semi Condensed", "Barlow", sans-serif;
+        font-weight: 600;
+        font-size: 18px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 13px 26px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover { filter: brightness(1.08); }
+      .hero-note { color: var(--steel-soft); font-size: 15px; margin: 0; }
+
+      /* ---------- Section scaffolding ---------- */
+      section { padding: 56px 0; }
+      .section-head { max-width: 760px; margin-bottom: 30px; }
+      .section-head h2 { font-size: clamp(32px, 4.5vw, 44px); font-weight: 700; text-transform: uppercase; line-height: 1.02; }
+      .section-head p { color: var(--ink-soft); margin: 12px 0 0; font-size: 18px; }
+
+      /* ---------- How it works strip ---------- */
+      .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .how-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+      .how-card .num {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .how-card h3 { font-size: 22px; font-weight: 600; text-transform: uppercase; margin: 10px 0 6px; }
+      .how-card p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+      /* ---------- Sample shop ---------- */
+      .demo-flag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--amber-bg);
+        color: var(--amber-ink);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 18px;
+      }
+      .shop-shell {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .shop-topbar {
+        background: var(--steel);
+        color: var(--steel-ink);
+        padding: 26px 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .shop-name { font-size: clamp(30px, 4vw, 42px); font-weight: 700; text-transform: uppercase; line-height: 1; }
+      .shop-name span { color: var(--accent); }
+      .shop-meta { color: var(--steel-soft); font-size: 15.5px; margin-top: 6px; }
+      .shop-meta a { color: var(--steel-ink); text-decoration: none; font-weight: 600; }
+      .shop-meta a:hover { text-decoration: underline; }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        border: 1px solid #3a3d45;
+        border-radius: 999px;
+        padding: 9px 18px;
+        font-weight: 600;
+        font-size: 15.5px;
+        white-space: nowrap;
+      }
+      .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green-dot); flex: none; }
+      .status-pill.closed .status-dot { background: var(--red); }
+      .status-pill .until { color: var(--steel-soft); font-weight: 500; }
+
+      .shop-body { display: grid; grid-template-columns: 1fr 1.15fr; gap: 0; }
+      .shop-info { padding: 30px; border-right: 1px solid var(--line); }
+      .shop-info h3 {
+        font-size: 20px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.05em; margin: 26px 0 10px; color: var(--ink);
+      }
+      .shop-info h3:first-child { margin-top: 0; }
+      .hours-table { width: 100%; border-collapse: collapse; font-size: 16px; }
+      .hours-table td { padding: 5px 0; border-bottom: 1px dashed var(--line); }
+      .hours-table tr:last-child td { border-bottom: none; }
+      .hours-table td:last-child { text-align: right; font-weight: 600; }
+      .hours-table tr.today td { color: var(--accent); font-weight: 700; }
+      .service-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .service-list li {
+        background: var(--surface-2);
+        border-radius: 8px;
+        padding: 9px 13px;
+        font-weight: 500;
+        font-size: 15.5px;
+      }
+      .perk-list { list-style: none; margin: 0; padding: 0; }
+      .perk-list li { padding: 5px 0 5px 24px; position: relative; color: var(--ink-soft); }
+      .perk-list li::before {
+        content: "";
+        position: absolute; left: 2px; top: 13px;
+        width: 9px; height: 9px; border-radius: 2px;
+        background: var(--accent);
+      }
+      .perk-list li strong { color: var(--ink); }
+      .shop-contact { font-size: 16.5px; color: var(--ink-soft); }
+      .shop-contact a { color: var(--accent); font-weight: 700; text-decoration: none; }
+      .shop-contact a:hover { text-decoration: underline; }
+
+      /* ---------- Chat widget ---------- */
+      .chat-col { padding: 30px; display: flex; flex-direction: column; background: var(--surface); }
+      .chat-frame {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 560px;
+        background: var(--surface);
+      }
+      .chat-head {
+        background: var(--accent);
+        color: #fff;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+      .chat-avatar {
+        width: 42px; height: 42px; border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700; font-size: 19px;
+        flex: none;
+      }
+      .chat-head .who { line-height: 1.25; }
+      .chat-head .who b { font-size: 17.5px; display: block; }
+      .chat-head .who span { font-size: 13.5px; opacity: 0.88; display: inline-flex; align-items: center; gap: 6px; }
+      .chat-head .who .mini-dot { width: 8px; height: 8px; border-radius: 50%; background: #7dffb0; display: inline-block; }
+      .chat-head .who .mini-dot.closed { background: #ffb3ab; }
+      .chat-log {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 18px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: var(--surface);
+      }
+      .msg { max-width: 86%; padding: 11px 15px; border-radius: 16px; font-size: 16px; line-height: 1.45; overflow-wrap: break-word; }
+      .msg.bot { background: var(--bubble-bot); color: var(--ink); align-self: flex-start; border-bottom-left-radius: 5px; }
+      .msg.user { background: var(--bubble-user); color: var(--bubble-user-ink); align-self: flex-end; border-bottom-right-radius: 5px; }
+      .msg p { margin: 0 0 8px; }
+      .msg p:last-child { margin-bottom: 0; }
+      .msg ul { margin: 4px 0 8px; padding-left: 20px; }
+      .msg li { margin: 2px 0; }
+      .est-badge {
+        display: inline-block;
+        background: var(--amber-bg);
+        color: var(--amber-ink);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 999px;
+        margin-bottom: 7px;
+      }
+      .est-price { font-family: "Barlow Condensed", sans-serif; font-size: 26px; font-weight: 700; display: block; line-height: 1.1; }
+      .typing { display: inline-flex; gap: 5px; padding: 14px 16px; }
+      .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); animation: blink 1.1s infinite; }
+      .typing i:nth-child(2) { animation-delay: 0.18s; }
+      .typing i:nth-child(3) { animation-delay: 0.36s; }
+      @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 18px 4px; }
+      .chip {
+        border: 1.5px solid var(--accent);
+        color: var(--accent);
+        background: transparent;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 14.5px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .chip:hover { background: var(--accent-soft); }
+      .chat-form { display: flex; gap: 9px; padding: 14px; border-top: 1px solid var(--line); }
+      .chat-form input {
+        flex: 1;
+        min-width: 0;
+        font-family: inherit;
+        font-size: 16px;
+        padding: 12px 15px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--ink);
+      }
+      .chat-form input:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+      .chat-form button {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border: none;
+        font-family: "Barlow Semi Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 16.5px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 12px 22px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .chat-form button:hover { filter: brightness(1.08); }
+      .chat-caption { font-size: 13.5px; color: var(--ink-faint); text-align: center; padding: 0 18px 14px; margin: 0; }
+
+      /* ---------- Footer ---------- */
+      footer {
+        background: var(--steel);
+        color: var(--steel-ink);
+        padding: 48px 0 56px;
+        margin-top: 8px;
+      }
+      footer h2 { font-size: 30px; font-weight: 700; text-transform: uppercase; }
+      footer p { color: #c9c6be; max-width: 640px; margin: 12px 0 0; }
+      footer .foot-contact { margin-top: 22px; font-size: 18px; }
+      footer .foot-contact a { color: #ffffff; font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--accent); }
+      footer .foot-contact a:hover { color: var(--accent); }
+      footer .fine { margin-top: 30px; font-size: 14px; color: var(--steel-soft); }
+
+      @media (max-width: 860px) {
+        .how-grid { grid-template-columns: 1fr; }
+        .shop-body { grid-template-columns: 1fr; }
+        .shop-info { border-right: none; border-bottom: 1px solid var(--line); }
+        .chat-frame { min-height: 520px; }
+        .hero { padding: 48px 0 56px; }
+        section { padding: 44px 0; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ================= HERO: Tony's product ================= -->
+    <header class="hero">
+      <div class="wrap">
+        <p class="kicker">Tony's Tech Services Nashville</p>
+        <h1>AI Front Desk<br /><span class="thin">Live Demo</span></h1>
+        <p class="sub">
+          This is a working demo of the AI Front Desk — a chat assistant that sits on a business's
+          website and answers customers around the clock. It works for any small business, not just
+          auto shops. <strong>Tony builds it, sets it up on your site, and manages it for you</strong> —
+          you don't touch any of the tech.
+        </p>
+        <p class="sub">
+          It's <strong>$299/month</strong>, and it handles <strong>3&times; the monthly conversation
+          volume</strong> of the $99 competitor plans, which cap out at 75–200 conversations a month.
+          The difference is simple: those plans pay per-use fees to outside AI companies, so they have
+          to cap you. This runs on Tony's own equipment, so there's no per-call meter running.
+        </p>
+        <div class="hero-facts">
+          <span class="hero-fact"><b>$299/mo</b> — done for you</span>
+          <span class="hero-fact"><b>3&times;</b> the volume of $99 plans</span>
+          <span class="hero-fact">Runs on <b>Tony's own equipment</b>, not paid APIs</span>
+          <span class="hero-fact">Answers <b>24/7</b>, even after closing</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn" href="#demo">Try the demo</a>
+          <p class="hero-note">Scroll down and ask it something — hours, prices, booking.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= How it works ================= -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What it does</h2>
+          <p>The assistant only answers from facts about your business — your hours, your services, your prices. Anything it can't answer, it doesn't guess: it takes the customer's name and number and the shop calls them back.</p>
+        </div>
+        <div class="how-grid">
+          <div class="how-card">
+            <div class="num">1</div>
+            <h3>Answers the basics</h3>
+            <p>Hours, location, services, phone number, and labeled price estimates — instantly, at 2 PM or 2 AM.</p>
+          </div>
+          <div class="how-card">
+            <div class="num">2</div>
+            <h3>Never guesses</h3>
+            <p>Appointments, towing, repair questions — anything outside its facts gets a name and callback number taken instead of a made-up answer.</p>
+          </div>
+          <div class="how-card">
+            <div class="num">3</div>
+            <h3>Tony runs it</h3>
+            <p>Setup, training on your business's facts, and ongoing management are all handled for you. If your hours or prices change, one call to Tony updates it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Sample shop + chat ================= -->
+    <section id="demo" style="padding-top: 8px;">
+      <div class="wrap">
+        <span class="demo-flag">Demo example — fictional shop</span>
+        <div class="section-head">
+          <h2>See it on a shop's page</h2>
+          <p>Below is a sample business page with the AI Front Desk installed, the same way it would appear on a real customer's website. The shop is made up for this demo — the chat is real. Try asking it a question it can't answer and watch what it does.</p>
+        </div>
+
+        <div class="shop-shell">
+          <div class="shop-topbar">
+            <div>
+              <div class="shop-name">Todd's Complete <span>Auto Care</span></div>
+              <div class="shop-meta">
+                425 SE Broad St, Murfreesboro, TN 37130 &nbsp;·&nbsp;
+                <a href="tel:+16159629050">(615) 962-9050</a>
+              </div>
+            </div>
+            <div class="status-pill" id="statusPill" role="status">
+              <span class="status-dot"></span>
+              <span id="statusText">Checking hours…</span>
+              <span class="until" id="statusUntil"></span>
+            </div>
+          </div>
+
+          <div class="shop-body">
+            <div class="shop-info">
+              <h3>Hours</h3>
+              <table class="hours-table" id="hoursTable">
+                <tr data-days="1,2,3,4"><td>Monday – Thursday</td><td>7:30 AM – 5:00 PM</td></tr>
+                <tr data-days="5"><td>Friday</td><td>7:30 AM – 4:00 PM</td></tr>
+                <tr data-days="6,0"><td>Saturday – Sunday</td><td>Closed</td></tr>
+              </table>
+
+              <h3>Services</h3>
+              <ul class="service-list">
+                <li>Alignments</li>
+                <li>Oil Changes</li>
+                <li>Brake Work</li>
+                <li>Inspections</li>
+                <li>A/C Service</li>
+                <li>Diagnostics</li>
+              </ul>
+
+              <h3>Good to know</h3>
+              <ul class="perk-list">
+                <li><strong>Free shuttle</strong> while your car is in the shop</li>
+                <li><strong>36-month / 36,000-mile warranty</strong> on repairs</li>
+              </ul>
+
+              <h3>Contact</h3>
+              <p class="shop-contact">
+                425 SE Broad St<br />Murfreesboro, TN 37130<br />
+                Call <a href="tel:+16159629050">(615) 962-9050</a>
+              </p>
+            </div>
+
+            <div class="chat-col">
+              <div class="chat-frame">
+                <div class="chat-head">
+                  <div class="chat-avatar">TC</div>
+                  <div class="who">
+                    <b>Todd's Front Desk</b>
+                    <span><span class="mini-dot" id="chatDot"></span><span id="chatStatus">Online — replies instantly</span></span>
+                  </div>
+                </div>
+                <div class="chat-log" id="chatLog" aria-live="polite"></div>
+                <div class="chips" id="chips">
+                  <button class="chip" type="button" data-q="What are your hours?">What are your hours?</button>
+                  <button class="chip" type="button" data-q="How much is an oil change?">Oil change price</button>
+                  <button class="chip" type="button" data-q="I need to book an appointment">Book an appointment</button>
+                  <button class="chip" type="button" data-q="Where are you located?">Where are you located?</button>
+                </div>
+                <form class="chat-form" id="chatForm">
+                  <input id="chatInput" type="text" placeholder="Ask about hours, services, prices…" autocomplete="off" aria-label="Type your message" />
+                  <button type="submit">Send</button>
+                </form>
+                <p class="chat-caption">Demo chat — no real messages are sent and no calls are placed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+      <div class="wrap">
+        <h2>Want this on your website?</h2>
+        <p>
+          AI Front Desk is a service from <strong style="color:#fff;">Tony's Tech Services Nashville</strong>.
+          It can be set up on any business's website — auto shops, salons, contractors, offices, anyone
+          whose phone rings with the same questions every day. Tony builds it, sets it up, and keeps it
+          running for $299/month.
+        </p>
+        <p class="foot-contact">
+          Call or text Tony at <a href="tel:+16154977997">615-497-7997</a>
+          &nbsp;·&nbsp; <a href="mailto:Nephewsrock@yahoo.com">Nephewsrock@yahoo.com</a>
+        </p>
+        <p class="fine">Todd's Complete Auto Care is a fictional business shown only to demonstrate the AI Front Desk.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ---------- The only facts the assistant may use ---------- */
+        var SHOP = {
+          name: "Todd's Complete Auto Care",
+          address: "425 SE Broad St, Murfreesboro, TN 37130",
+          phone: "(615) 962-9050",
+          phoneDigits: "6159629050",
+          services: ["Alignments", "Oil changes", "Brake work", "Inspections", "A/C service", "Diagnostics"],
+          estimates: {
+            oil:      { label: "Oil change",        range: "$50–$80",          note: "depending on your vehicle and oil type" },
+            brakes:   { label: "Brake pads",        range: "$150–$300",        note: "per axle, depending on the vehicle" },
+            alignment:{ label: "Wheel alignment",   range: "$90–$130",         note: "for most vehicles" }
+          },
+          /* day: 0=Sun..6=Sat, times in minutes from midnight, Central time */
+          hours: {
+            0: null, 6: null,
+            1: [450, 1020], 2: [450, 1020], 3: [450, 1020], 4: [450, 1020],
+            5: [450, 960]
+          },
+          hoursText: [
+            "Monday – Thursday: 7:30 AM – 5:00 PM",
+            "Friday: 7:30 AM – 4:00 PM",
+            "Saturday – Sunday: Closed"
+          ]
+        };
+
+        /* ---------- Open / closed, computed in America/Chicago ---------- */
+        function centralNow() {
+          var parts = {};
+          var fmt = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/Chicago",
+            weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23"
+          });
+          var list = fmt.formatToParts(new Date());
+          for (var i = 0; i < list.length; i++) parts[list[i].type] = list[i].value;
+          var dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+          return { day: dayMap[parts.weekday], mins: parseInt(parts.hour, 10) * 60 + parseInt(parts.minute, 10) };
+        }
+        function fmtTime(mins) {
+          var h = Math.floor(mins / 60), m = mins % 60;
+          var ap = h >= 12 ? "PM" : "AM";
+          var h12 = h % 12; if (h12 === 0) h12 = 12;
+          return h12 + ":" + (m < 10 ? "0" : "") + m + " " + ap;
+        }
+        var DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        function shopStatus() {
+          var now = centralNow();
+          var today = SHOP.hours[now.day];
+          if (today && now.mins >= today[0] && now.mins < today[1]) {
+            return { open: true, day: now.day, line: "Open now", until: "closes " + fmtTime(today[1]) };
+          }
+          /* find next opening */
+          for (var d = 0; d < 8; d++) {
+            var day = (now.day + d) % 7;
+            var h = SHOP.hours[day];
+            if (!h) continue;
+            if (d === 0 && now.mins >= h[0]) continue;
+            var when = d === 0 ? "today" : d === 1 ? "tomorrow" : DAY_NAMES[day];
+            return { open: false, day: now.day, line: "Closed", until: "opens " + when + " at " + fmtTime(h[0]) };
+          }
+          return { open: false, day: now.day, line: "Closed", until: "" };
+        }
+        function paintStatus() {
+          var s = shopStatus();
+          var pill = document.getElementById("statusPill");
+          document.getElementById("statusText").textContent = s.line;
+          document.getElementById("statusUntil").textContent = s.until ? "· " + s.until : "";
+          pill.classList.toggle("closed", !s.open);
+          var dot = document.getElementById("chatDot");
+          dot.classList.toggle("closed", !s.open);
+          document.getElementById("chatStatus").textContent = s.open
+            ? "Open now — replies instantly"
+            : "Shop's closed — still answers instantly";
+          var rows = document.querySelectorAll("#hoursTable tr");
+          for (var i = 0; i < rows.length; i++) {
+            var days = rows[i].getAttribute("data-days").split(",");
+            rows[i].classList.toggle("today", days.indexOf(String(s.day)) !== -1);
+          }
+        }
+
+        /* ---------- Chat ---------- */
+        var log = document.getElementById("chatLog");
+        var form = document.getElementById("chatForm");
+        var input = document.getElementById("chatInput");
+        var flow = null; /* { step: "name" | "phone", name: "", reason: "" } */
+
+        function scrollLog() { log.scrollTop = log.scrollHeight; }
+        function addMsg(cls, build) {
+          var div = document.createElement("div");
+          div.className = "msg " + cls;
+          build(div);
+          log.appendChild(div);
+          scrollLog();
+          return div;
+        }
+        function textMsg(cls, text) {
+          return addMsg(cls, function (div) {
+            var p = document.createElement("p");
+            p.textContent = text;
+            div.appendChild(p);
+          });
+        }
+        function botSay(text) { return textMsg("bot", text); }
+        function botSayRich(builder) { return addMsg("bot", builder); }
+        function estimateMsg(est, extraLine) {
+          botSayRich(function (div) {
+            var badge = document.createElement("span");
+            badge.className = "est-badge";
+            badge.textContent = "Estimate";
+            div.appendChild(badge);
+            var price = document.createElement("span");
+            price.className = "est-price";
+            price.textContent = est.range;
+            div.appendChild(price);
+            var p = document.createElement("p");
+            p.textContent = est.label + " — that's a typical range " + est.note + ". " + (extraLine || "") +
+              "For an exact quote on your vehicle, call " + SHOP.phone + ".";
+            div.appendChild(p);
+          });
+        }
+        function typingThen(fn) {
+          var t = addMsg("bot", function (div) {
+            div.className = "msg bot typing";
+            div.innerHTML = "<i></i><i></i><i></i>";
+          });
+          setTimeout(function () {
+            t.remove();
+            fn();
+          }, 550);
+        }
+
+        function hoursAnswer() {
+          var s = shopStatus();
+          botSayRich(function (div) {
+            var p = document.createElement("p");
+            p.textContent = s.open
+              ? "We're open right now (we close at " + fmtTime(SHOP.hours[s.day][1]) + " today). Our hours are:"
+              : "We're closed right now — we " + s.until.replace("opens", "open again") + ". Our hours are:";
+            div.appendChild(p);
+            var ul = document.createElement("ul");
+            SHOP.hoursText.forEach(function (line) {
+              var li = document.createElement("li");
+              li.textContent = line;
+              ul.appendChild(li);
+            });
+            div.appendChild(ul);
+          });
+        }
+        function servicesAnswer() {
+          botSayRich(function (div) {
+            var p = document.createElement("p");
+            p.textContent = "Here's what we do at " + SHOP.name + ":";
+            div.appendChild(p);
+            var ul = document.createElement("ul");
+            SHOP.services.forEach(function (svc) {
+              var li = document.createElement("li");
+              li.textContent = svc;
+              ul.appendChild(li);
+            });
+            div.appendChild(ul);
+            var p2 = document.createElement("p");
+            p2.textContent = "Want a price estimate on one of these? Just ask — or call us at " + SHOP.phone + ".";
+            div.appendChild(p2);
+          });
+        }
+        function startCallback(reason) {
+          flow = { step: "name", name: "", reason: reason };
+          botSay(reason + " I can take your name and number and have someone from the shop call you back. What's your name?");
+        }
+        function handleFlow(text) {
+          if (flow.step === "name") {
+            flow.name = text.trim();
+            flow.step = "phone";
+            botSay("Thanks, " + flow.name + ". What's the best phone number for the shop to call you back?");
+            return;
+          }
+          if (flow.step === "phone") {
+            var digits = text.replace(/\D/g, "");
+            if (digits.length < 7) {
+              botSay("That doesn't look like a full phone number — could you enter it again, area code included?");
+              return;
+            }
+            var name = flow.name, number = text.trim();
+            flow = null;
+            botSay("Got it, " + name + " — I've passed your number (" + number + ") to the shop, and someone will call you back. If it's urgent, you can also reach us right away at " + SHOP.phone + ".");
+            return;
+          }
+        }
+
+        function answer(raw) {
+          var q = " " + raw.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ") + " ";
+
+          if (/\b(book|appointment|schedule|come in|drop off|bring (it|my|the) (car|truck|vehicle) in)\b/.test(q)) {
+            startCallback("I can't book appointments directly here — that's handled by the front desk so nothing gets double-booked.");
+            return;
+          }
+          if (/\b(tow|towing|tow truck|stranded|broken down|breakdown)\b/.test(q)) {
+            startCallback("I can't arrange a tow from here.");
+            return;
+          }
+          if (/\b(oil)\b/.test(q) && /\b(price|cost|much|charge|estimate)\b/.test(q)) {
+            estimateMsg(SHOP.estimates.oil); return;
+          }
+          if (/\b(brake|pads|rotor)\b/.test(q) && /\b(price|cost|much|charge|estimate)\b/.test(q)) {
+            estimateMsg(SHOP.estimates.brakes); return;
+          }
+          if (/\b(alignment|align)\b/.test(q) && /\b(price|cost|much|charge|estimate)\b/.test(q)) {
+            estimateMsg(SHOP.estimates.alignment); return;
+          }
+          if (/\b(brake|brakes)\b/.test(q) && /\b(squeak|grind|noise|sound|feel|soft|spongy|pulse|shake)\b/.test(q)) {
+            startCallback("Brake noises and pedal feel really need a hands-on look — I don't want to guess at something safety-related.");
+            return;
+          }
+          if (/\b(diagnostic|diagnostics|diagnose|check engine|engine light|warning light|whats wrong|what is wrong|noise|leak|wont start|won t start|not starting)\b/.test(q)) {
+            startCallback("That needs a proper diagnostic look at the shop — I can't tell what's wrong from chat, and I won't guess.");
+            return;
+          }
+          if (/\b(price|cost|much|charge|estimate|quote|rate)\b/.test(q)) {
+            botSay("Here are the estimates I can give you — which job did you have in mind?");
+            estimateMsg(SHOP.estimates.oil);
+            estimateMsg(SHOP.estimates.brakes);
+            estimateMsg(SHOP.estimates.alignment);
+            return;
+          }
+          if (/\b(hour|hours|open|close|closed|when)\b/.test(q)) { hoursAnswer(); return; }
+          if (/\b(where|located|location|address|directions|find you|get there)\b/.test(q)) {
+            botSay("We're at " + SHOP.address + ". You can reach us at " + SHOP.phone + " if you need directions.");
+            return;
+          }
+          if (/\b(phone|number|call you|reach you|contact)\b/.test(q)) {
+            botSay("You can call the shop at " + SHOP.phone + ".");
+            return;
+          }
+          if (/\b(warranty|guarantee)\b/.test(q)) {
+            botSay("Our repairs are backed by a 36-month / 36,000-mile warranty.");
+            return;
+          }
+          if (/\b(shuttle|ride|loaner|drop me|pick me up)\b/.test(q)) {
+            botSay("Yes — we offer a free shuttle while your car is in the shop. Call " + SHOP.phone + " to arrange it with your visit.");
+            return;
+          }
+          if (/\b(service|services|do you do|offer|fix|repair)\b/.test(q)) { servicesAnswer(); return; }
+          if (/\b(oil change|oil)\b/.test(q)) {
+            botSay("Yes, oil changes are one of our regular services. Here's the typical range:");
+            estimateMsg(SHOP.estimates.oil);
+            return;
+          }
+          if (/\b(inspection|inspect|emissions|safety check)\b/.test(q)) {
+            botSay("We do inspections. I don't have a set price for that one here — call " + SHOP.phone + " and the shop will give you the exact cost.");
+            return;
+          }
+          if (/\b(a c|ac|air condition|air conditioning|heat|heater)\b/.test(q)) {
+            botSay("We do A/C service. Pricing depends on what the system needs after a check, so for an exact number call " + SHOP.phone + ".");
+            return;
+          }
+          if (/\b(hi|hello|hey|howdy)\b/.test(q) && q.length < 30) {
+            botSay("Hi there — welcome to " + SHOP.name + ". Ask me about our hours, services, or prices, or type “book an appointment” and I'll take your info for a callback.");
+            return;
+          }
+          if (/\b(thank|thanks|bye|goodbye)\b/.test(q)) {
+            botSay("You're welcome — thanks for stopping by. If you need us, we're at " + SHOP.phone + ".");
+            return;
+          }
+          startCallback("That's one I can't answer from here, and I'd rather not guess.");
+        }
+
+        function userSend(text) {
+          var clean = text.trim();
+          if (!clean) return;
+          textMsg("user", clean);
+          typingThen(function () {
+            if (flow) { handleFlow(clean); }
+            else { answer(clean); }
+          });
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var v = input.value;
+          input.value = "";
+          userSend(v);
+          input.focus();
+        });
+        document.getElementById("chips").addEventListener("click", function (e) {
+          var btn = e.target.closest(".chip");
+          if (btn) userSend(btn.getAttribute("data-q"));
+        });
+
+        /* ---------- Greeting + status ---------- */
+        paintStatus();
+        setInterval(paintStatus, 30000);
+        var s = shopStatus();
+        botSay("Hi, welcome to " + SHOP.name + ". I'm the front desk assistant — I can answer questions about our hours, services, location, and prices. " +
+          (s.open ? "We're open right now." : "We're closed right now, but I can still help — and if you need the shop, I'll take your name and number for a callback.") +
+          " What can I do for you?");
+      })();
+    </script>
+  </body>
+</html>
